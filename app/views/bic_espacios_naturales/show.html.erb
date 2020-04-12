@@ -1,0 +1,85 @@
+<% if @bic_espacio_natural %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= @bic_espacio_natural.nombre %>
+         <div class="panel-acciones">
+           <%=
+            link_to icon('pencil'), edit_camino_etapa_bic_espacio_natural_path(
+                @bic_espacio_natural.etapa.camino,
+                @bic_espacio_natural.etapa,
+                @bic_espacio_natural
+              ),
+              class: 'btn-xs btn-default'
+            %>
+           <%=
+            link_to icon('times'),
+              camino_etapa_bic_espacio_natural_path(
+                @bic_espacio_natural.etapa.camino,
+                @bic_espacio_natural.etapa,
+                @bic_espacio_natural
+              ),
+              method: :delete, class: 'btn-xs btn-danger',
+              data: { confirm: t('esta_seguro') }
+            %>
+         </div>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div id="map" class="mapa-bic-espacios-naturales"></div>
+      <hr>
+      <% @deshabilitar_form = true %>
+      <%= render 'form' %>
+    </div>
+    <!-- <div class="panel-footer">
+      <div class="panel-acciones-footer">
+      </div>
+    </div> -->
+  </div>
+
+  <script type="text/javascript">
+  var handler = Gmaps.build('Google');
+
+  handler.buildMap(
+    {
+      provider: {
+        zoom: 17,
+        scrollwheel: false,
+      },
+      internal: {id: 'map'}
+    },
+
+    function(){
+    markers = handler.addMarker(
+      {
+        lat: <%= @bic_espacio_natural.coordenadas.x %>,
+        lng: <%= @bic_espacio_natural.coordenadas.y %>,
+        infowindow: `
+          <h4><%= @bic_espacio_natural.nombre.capitalize %></h4>
+          <p><%= cl_image_tag @bic_espacio_natural.imagen.path, width: 250, height: 250, crop: :fit if @bic_espacio_natural.imagen %></p>
+          `
+          // <p><%= icon('map-marker', @bic_espacio_natural.localizacion.capitalize, class:'fa-fw') %></p>
+          // <p><%= icon('clock-o', @bic_espacio_natural.horario, class:'fa-fw') %></p>
+          // <p><%= icon('area-chart', @bic_espacio_natural.extension, class:'fa-fw') %></p>
+          // <p><%= icon('globe', @bic_espacio_natural.historia.capitalize, class:'fa-fw') %></p>
+
+      }
+    );
+
+    handler.map.centerOn({ lat: <%= @bic_espacio_natural.coordenadas.x %>, lng: <%= @bic_espacio_natural.coordenadas.y %> })
+  });
+  </script>
+<% end %>
+
+<!-- Notificaciones -->
+<% content_for :notifica do %>
+  <% if @bic_espacio_natural %>
+    <%= t('registro_recuperado_correcto') %>
+  <% else %>
+    <% content_for :notifica_estado do %>notifica_error<% end %>
+    <%= t('no_registros') %>
+    <% content_for :notifica_detalle do %>
+      <%= t('no_registros_detalle') %>
+    <% end %>
+  <% end %>
+<% end %>

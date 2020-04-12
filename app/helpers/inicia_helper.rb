@@ -1,0 +1,2 @@
+module IniciaHelper
+end

@@ -1,0 +1,43 @@
+<%= video_tag "video.mp4", poster: 'poster.jpg', id: 'video-fondo', controls: false,
+      class: 'video-fondo', loop: true, autoplay:true, preload: 'auto', type: 'video/mp4' %>
+
+<div class="app-home-panel <%= controller_name %>">
+  <div class="contenido">
+    <%= yield :home_content %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function ajustarPanel() {
+    var winh = $(window).height();
+    var winw = $(window).width();
+    var pw = $('.app-home-panel').width();
+    var ph = $('.app-home-panel').height();
+    var x = winw/2 - pw/2;
+    var y = winh/2 - ph/2;
+
+    $('.app-home-panel').css({
+          position: 'fixed',
+          left: x,
+          bottom: y,
+    });
+  }
+
+  $(document).ready(function(){
+    $('.top-background').hide();
+
+    $('main').css({
+      padding: 0,
+      margin: 0,
+    });
+
+    $('.video-fondo').click(function() {
+      $(this).get(0).paused ? $(this).get(0).play() : $(this).get(0).pause();
+    });
+
+    ajustarPanel();
+
+    $(window).resize(ajustarPanel);
+    ajustarPanel();
+    });
+</script>

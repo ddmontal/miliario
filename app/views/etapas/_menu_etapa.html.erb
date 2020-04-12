@@ -1,0 +1,15 @@
+<% content_for :menu_controlador do %>
+  <ul class="nav nav-pills nav-stacked">
+    <li class="nav-item">
+      <%= link_to icon('info-circle', t('servicios'), class: "fa-fw") , camino_etapa_servicios_path(@camino, @etapa), { class: 'nav-link' } %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to icon('photo', t('bic_artisticos'), class: "fa-fw") , camino_etapa_bic_artisticos_path(@camino, @etapa), { class: 'nav-link' } %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to icon('tree', t('bic_espacios_naturales'), class: "fa-fw") , camino_etapa_bic_espacios_naturales_path(@camino, @etapa), { class: 'nav-link' } %>
+    </li>
+  </ul>
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  camino_id: 
+  comienzo: MyString
+  fin: MyString
+  distancia: 1
+
+two:
+  camino_id: 
+  comienzo: MyString
+  fin: MyString
+  distancia: 1

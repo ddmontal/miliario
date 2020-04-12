@@ -1,0 +1,78 @@
+<div class="col-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Listado de Servicios
+        <% if current_usuario.admin? %>
+          <div class="panel-acciones">
+            <%= link_to icon('plus', t('nuevo')), new_camino_etapa_servicio_path(@camino, @etapa, @servicio), class: 'btn-xs btn-default' %>
+          </div>
+        <% end %>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="celda-acciones">
+              <%= t('acciones') %>
+            </td>
+            <td>
+              <%= t('nombre') %>
+            </td>
+            <td>
+              <%= t('localizacion') %>
+            </td>
+            <td>
+              <%= t('horario') %>
+            </td>
+            <td>
+              <%= t('disponibilidad') %>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% @servicios.each do |servicio| %>
+            <% if !defined?(@anterior) || defined?(@anterior) && @anterior.tipo != servicio.tipo %>
+              <tr class="tr-header">
+                <td colspan="5">
+                  <label class="">
+                    <%= servicio.tipo.humanize %>
+                  </label>
+                </td>
+
+              </tr>
+            <% end %>
+
+            <tr class="<%= cycle('odd', 'even') %>">
+              <% if current_usuario.admin? %>
+                <td class="celda-acciones">
+                  <%= link_to icon('eye'), camino_etapa_servicio_path(@camino, @etapa, servicio), class: "btn-xs btn-primary" %>
+                  <%= link_to icon('pencil'), edit_camino_etapa_servicio_path(@camino, @etapa, servicio), class: "btn-xs btn-default" %>
+                  <%= link_to icon('times'), camino_etapa_servicio_path(@camino, @etapa, servicio), method: :delete, class: "btn-xs btn-danger", data: { confirm: t('esta_seguro') } %>
+                </td>
+              <% end %>
+              <td>
+                <%= servicio.nombre %>
+              </td>
+              <td>
+                <%= servicio.localizacion %>
+              </td>
+              <td>
+                <%= servicio.horario %>
+              </td>
+              <td>
+                <%= servicio.disponibilidad %>
+              </td>
+            </tr>
+
+            <% @anterior = servicio %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div class="panel-footer">
+    </div> -->
+  </div>
+</div>

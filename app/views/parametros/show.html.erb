@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('datos_parametro') %></h3>
+      </div>
+      <div class="panel-body">
+        <p>
+          <strong>Clave:</strong>
+          <ul class="list-group">
+            <li class="list-group-item"><%= @parametro.clave %></li>
+          </ul>
+        </p>
+
+        <p>
+          <strong>Valor:</strong>
+          <% if @parametro.multi %>
+            <ul class="list-group">
+              <% for v in @parametro.valor %>
+                <li class="list-group-item"><%= v %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <%= @parametro.valor %>
+          <% end %>
+
+        </p>
+      </div>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-lg-6 text-left">
+            <%= notice %>
+          </div>
+          <div class="col-lg-6 text-right">
+            <%= link_to 'Edit', edit_parametro_path(@parametro), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-1"></div>
+</div>

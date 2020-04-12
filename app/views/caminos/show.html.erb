@@ -1,0 +1,74 @@
+<div class="col-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= t('etapas_camino') %><b><%= @camino.nombre %></b>
+        <% if current_usuario.admin? %>
+          <div class="panel-acciones">
+            <%= link_to icon('plus'), new_camino_etapa_path(@camino), class: 'btn-xs btn-default' %>
+          </div>
+        <% end %>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <% if current_usuario.admin? %>
+              <td class="celda-acciones">
+                <%= t('acciones') %>
+              </td>
+            <% end %>
+            <td>
+              <%= t('camino_inicio') %>
+            </td>
+            <td>
+              <%= t('camino_fin') %>
+            </td>
+            <td>
+              <%= t('distancia_col')+' ('+t('sim_km')+')' %>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @etapas.each do |etapa| %>
+            <tr class="<%= cycle('odd', 'even') %> clickable">
+              <% if current_usuario.admin? %>
+                <td class="celda-acciones">
+                  <%= link_to icon('eye'), camino_etapa_path(@camino, etapa), class: "btn-xs btn-primary" %>
+                  <%= link_to icon('pencil'), edit_camino_etapa_path(@camino, etapa), class: 'btn-xs btn-default' %>
+                  <%= link_to icon('times'), camino_etapa_path(@camino, etapa), method: :delete, class: 'btn-xs btn-danger', data: { confirm: t('esta_seguro') } %>
+                </td>
+              <% end %>
+              <td onclick="document.getElementById('ver<%= etapa.id %>').click()">
+                <%= etapa.comienzo %>
+                <%= link_to etapa.comienzo, camino_etapa_path(@camino, etapa), class: 'hidden', id: "ver#{etapa.id}" %>
+              </td>
+              <td onclick="document.getElementById('ver<%= etapa.id %>').click()">
+                <%= etapa.fin %>
+              </td>
+              <td onclick="document.getElementById('ver<%= etapa.id %>').click()">
+                <%= etapa.distancia.to_s.ljust(5, '0') %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel-footer">
+      <div class="panel-acciones-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :notifica do %>
+  <% if @etapas.count > 0 %>
+    <%= t('recuperados_@_registros').gsub('@#', '<b>'+@etapas.count.to_s+'</b>').html_safe %>
+    <% content_for :notifica_detalle do %>
+
+    <% end %>
+  <% else %>
+    <%= t('no_caminos') %>
+  <% end %>
+<% end %>

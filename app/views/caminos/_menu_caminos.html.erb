@@ -1,0 +1,19 @@
+<% content_for :menu_controlador do %>
+  <ul class="nav nav-pills nav-stacked">
+    <li class="nav-item">
+    <%= link_to t('caminos') , { :controller => :caminos, :action => :index }, { class: 'nav-link' } %>
+    </li>
+
+    <li class="nav-item">
+      <%= link_to t('nuevo') , { :controller => :caminos, :action => :new }, { class: 'nav-link' } %>
+    </li>
+
+    <li class="nav-item">
+      <%# link_to t('editar') , { :controller => :caminos, :action => :index }, { class: 'nav-link' } %>
+    </li>
+
+    <li class="nav-item">
+      <%# link_to t('eliminar') , { :controller => :caminos, :action => :index }, { class: 'nav-link' } %>
+    </li>
+  </ul>
+<% end %>

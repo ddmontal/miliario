@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  camino_id: 
+  etapa_id: 
+  nombre: MyString
+  localizacion: MyString
+  coordenadas: 
+  historia: MyText
+  horario: MyString
+  numero_visitas: 1
+  extension: 1
+
+two:
+  camino_id: 
+  etapa_id: 
+  nombre: MyString
+  localizacion: MyString
+  coordenadas: 
+  historia: MyText
+  horario: MyString
+  numero_visitas: 1
+  extension: 1

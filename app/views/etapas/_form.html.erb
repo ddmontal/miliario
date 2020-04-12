@@ -1,0 +1,25 @@
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('nuevo_elemento') %></h3>
+  </div>
+  <%= form_for([@camino, @etapa]) do |f| %>
+    <div class="panel-body">
+      <div class="form-group">
+        <%= f.label :comienzo %>
+        <%= f.text_field :comienzo, class:'form-control'%>
+      </div>
+      <div class="form-group">
+        <%= f.label :fin %>
+        <%= f.text_field :fin, class:'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :distancia %>
+        <%= f.text_field :distancia, class:'form-control' %>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

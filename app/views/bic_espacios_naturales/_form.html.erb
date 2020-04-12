@@ -1,0 +1,64 @@
+<%= form_for([@etapa.camino, @etapa, @bic_espacio_natural], html: { multipart: true }) do |f| %>
+  <div class="panel <%= if @deshabilitar_form; 'panel-default'; else 'panel-primary'; end %>">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('datos_bic_espacio_natural') %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <%= f.label :imagen %>
+            <div style="margin-top: 5px">
+              <% if @deshabilitar_form %>
+                <%= cl_image_tag @bic_espacio_natural.imagen.path, width: 250, height: 250, crop: :fit  if @bic_espacio_natural.imagen %>
+              <% else %>
+                <%= f.attachinary_file_field :imagen, id: '', width: '250px', height: '250px', class:'attachinary-input',
+                  readonly: @deshabilitar_form||false, 'title': t('subir_imagen') %>
+              <% end %>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div class="form-group">
+            <%= f.label :nombre %>
+            <%= f.text_field :nombre, class:'form-control', readonly: @deshabilitar_form||false %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :localizacion %>
+            <%= f.text_area :localizacion, class:'form-control', readonly: @deshabilitar_form||false %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :horario %>
+            <%= f.text_field :horario, class:'form-control', readonly: @deshabilitar_form||false %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :extension %>
+            <%= f.text_field :extension, class:'form-control', readonly: @deshabilitar_form||false %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+
+        </div>
+        <div class="col-lg-9">
+          <div class="form-group">
+            <%= f.label :historia %>
+            <%= f.text_area :historia, rows: 5, class:'form-control', readonly: @deshabilitar_form||false %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <% unless @deshabilitar_form %>
+      <div class="panel-footer">
+        <%= f.submit class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

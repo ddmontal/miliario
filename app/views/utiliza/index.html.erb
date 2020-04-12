@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="col-lg-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <% if @servicio %>
+            <%= t('mapa_servicio') %>
+          <% else %>
+            <%= t('mapa_etapa') %>
+          <% end %>
+          </h3>
+      </div>
+      <div class="panel-body">
+        <% if @servicio %>
+          <%= render 'map_servicio' %>
+        <% else %>
+          <%= render 'map_etapa' %>
+        <% end %>
+      </div>
+
+      <div class="panel-footer">
+        <%= link_to icon('pencil', t('editar'), class: "fa-fw"), camino_inicia_etapa_realiza_path(@camino, @inicia, @etapa, @realiza), class: 'btn btn-warning' %>
+      </div>
+    </div>
+  </div>
+  <% if @servicios_sin_utilizar.count > 0 %>
+    <div class="col-lg-5">
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Servicios sin utilizar
+            </h3>
+          </div>
+        <div class="panel-body">
+          <% unless @servicios_sin_utilizar.blank? %>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <td>
+                    Nombre
+                  </td>
+                  <td>
+                    Tipo
+                  </td>
+                </thead>
+                <tbody>
+                  <% for servicio in @servicios_sin_utilizar%>
+                    <% if !defined?(@anterior) || defined?(@anterior) && @anterior.tipo != servicio.tipo %>
+                      <tr class="tr-header">
+                        <td colspan="5">
+                          <label class="">
+                            <%= servicio.tipo.humanize %>
+                          </label>
+                        </td>
+
+                      </tr>
+                    <% end %>
+                    <tr class="clickable">
+                      <td onclick="document.getElementById('realizar<%= servicio.id %>').click()">
+                        <%= servicio.nombre if servicio %>
+                        <%= link_to servicio.nombre, new_camino_inicia_etapa_realiza_servicio_utiliza_path(@camino, @inicia, @etapa, @realiza, servicio, @utiliza), class: 'hidden', id: "realizar#{servicio.id}" %>
+                      </td>
+                      <td onclick="document.getElementById('realizar<%= servicio.id %>').click()">
+                        <%= servicio.tipo.humanize if servicio && servicio.tipo %>
+                      </td>
+                    </tr>
+                    <% @anterior = servicio %>
+                  <% end %>
+                </tbody>
+              </table>
+          <% else %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="<%= if @servicios_sin_utilizar.count > 0; 'col-lg-5'; else 'col-lg-10' end %>">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+             Servicios Utilizados
+          </h3>
+        </div>
+      <div class="panel-body">
+        <% unless @servicios_utilizados.blank? %>
+            <table class="table table-striped table-hover">
+              <thead>
+                <td>
+                  Fecha
+                </td>
+                <td>
+                  Nombre
+                </td>
+                <td>
+                  Tipo
+                </td>
+                <td>
+                  Nota
+                </td>
+              </thead>
+              <tbody>
+                <% for servicio_utilizado in @servicios_utilizados %>
+                  <tr class="clickable">
+                    <td onclick="document.getElementById('ver<%= servicio_utilizado.id %>').click()">
+                      <%= l(servicio_utilizado.fecha) %>
+                      <%= link_to servicio_utilizado.servicio.nombre,
+                        camino_inicia_etapa_realiza_servicio_utiliza_path(
+                          @camino, @inicia, @etapa, @realiza, servicio_utilizado.servicio, servicio_utilizado
+                        ), class: 'hidden', id: "ver#{servicio_utilizado.id}" %>
+                    </td>
+                    <td onclick="document.getElementById('ver<%= servicio_utilizado.id %>').click()">
+                      <%= servicio_utilizado.servicio.nombre %>
+                    </td>
+                    <td onclick="document.getElementById('ver<%= servicio_utilizado.id %>').click()">
+                      <%= servicio_utilizado.servicio.tipo.humanize %>
+                    </td>
+                    <td onclick="document.getElementById('ver<%= servicio_utilizado.id %>').click()">
+                      <%= servicio_utilizado.nota %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+        <% else %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

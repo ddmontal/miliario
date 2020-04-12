@@ -1,0 +1,8 @@
+tmp/*
+
+public/system
+public/assets
+
+*.pid
+
+*.log

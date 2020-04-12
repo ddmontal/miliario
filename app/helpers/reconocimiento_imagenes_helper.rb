@@ -1,0 +1,2 @@
+module ReconocimientoImagenesHelper
+end

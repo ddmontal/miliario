@@ -1,0 +1,22 @@
+<% if @opiniones %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('comentarios') %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="actionBox">
+        <ul class="list-group">
+          <% @opiniones.each do |opinion| %>
+            <li class="list-group-item">
+                <div class="">
+                  <label><%= icon('user', opinion.usuario.alias, class: 'fa-fw') %> <%= t('usuario_comento') %>:</label>
+                  <p><%= opinion.critica %></p>
+                  <p class="small">on <%= opinion.updated_at.to_formatted_s(:long) %></p>
+                </div>
+            </li>
+            <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+.panel {
+  border: 0;
+  box-shadow: $sombra_defecto;
+}
+
+.panel-primary > .panel-heading {
+  background-color: $color_fondo_menu;
+  // border-radius: 0;
+  border: 0;
+}
+
+.panel-acciones {
+  float: right;
+  min-width: 60px;
+  text-align: right;
+
+  .btn {
+    box-shadow: $sombra_defecto;
+  }
+}

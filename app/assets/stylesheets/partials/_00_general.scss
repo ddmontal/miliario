@@ -1,0 +1,127 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+// Calculo de colores
+$color_sombra_menu: darken($color_fondo_menu, 75%);
+$color_fondo_titulo: darken($color_fondo_menu, 20%);
+$color_texto_menu: lighten($color_fondo_menu, 70%);
+$color_texto_seleccion: lighten($color_fondo_menu, 70%);
+$color_fila_impar: lighten($color_fondo_menu, 60%);
+$color_fila_resaltada: lighten($color_fondo_menu, 40%);
+$color_borde_menu_elementos: $color_fondo_titulo;
+$color_borde_panel: lighten(desaturate($color_borde_menu_elementos, 50%), 30%);
+$anchura_titulo: 260px;
+$ancho-menu-responsivo: 10px;
+
+$nprogress-color: $color-fondo-menu;
+$nprogress-height: 2px;
+
+$sombra_defecto: 0 0 3px lighten(desaturate($color_borde_menu_elementos, 50%), 30%);
+$sombra_defecto_xs: 0 0 2px lighten(desaturate($color_borde_menu_elementos, 50%), 60%);
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 300px;
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Verdana', sans-serif;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn {
+  border: 0;
+  transition: 0.3s all ease-in;
+  box-shadow: $sombra_defecto_xs;
+}
+
+.btn-group {
+  box-shadow: $sombra_defecto_xs;
+
+  .btn {
+    box-shadow: none;
+  }
+}
+
+.btn-xs {
+  transition: 0.3s all ease-in;
+}
+
+.btn-default {
+  color: $color_texto;
+}
+
+.btn-info, .btn-default {
+  background-color: desaturate(lighten($color-fondo-menu, 40%), 50%);
+}
+
+.btn-primary {
+  background-color: $color_fondo_menu;
+  &:hover {
+    background-color: lighten($color_fondo_menu, 15%);
+  }
+  &:hover {
+    background-color: lighten($color_fondo_menu, 15%);
+  }
+  &:active {
+    background-color: $color_fondo_menu;
+  }
+  &:focus {
+    background-color: $color_fondo_menu;
+  }
+
+}
+
+.btn-primary:active:hover,
+.btn-primary:active:focus,
+.btn-primary:active.focus,
+.btn-primary.active:hover,
+.btn-primary.active:focus,
+.btn-primary.active.focus,
+.open > .btn-primary.dropdown-toggle:hover,
+.open > .btn-primary.dropdown-toggle:focus,
+.open > .btn-primary.dropdown-toggle.focus {
+  background-color: lighten($color_fondo_menu, 15%);
+}
+
+.btn-info {
+    background-color: desaturate($color_fondo_menu, 20%);
+
+    &:hover {
+      background-color: lighten(desaturate($color_fondo_menu, 20%), 15%);
+    }
+    &:active {
+      background-color: desaturate($color_fondo_menu, 20%);
+    }
+    &:focus {
+      background-color: desaturate($color_fondo_menu, 20%);
+    }
+}
+
+.notifica_error {
+  color: #e02525;
+}
+
+.notifica_advertencia {
+  color: #ffce20;
+}
+
+.notifica_info {
+  color: #00afde;
+}
+
+#map {
+  width: 100%;
+  min-height: 500px;
+}
+
+.clickable {
+  cursor: pointer;
+  cursor: hand;
+}

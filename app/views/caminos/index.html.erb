@@ -1,0 +1,74 @@
+<div class="col-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Listado de Caminos
+        <% if current_usuario.admin? %>
+          <div class="panel-acciones">
+            <%= link_to icon('plus'), new_camino_path(@camino), class: 'btn-xs btn-default' %>
+          </div>
+        <% end %>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <% if current_usuario.admin? %>
+              <td class="celda-acciones">
+                <%= t('administracion') %>
+              </td>
+            <% end %>
+            <td>
+              <%= t('camino_nombre') %>
+            </td>
+            <td>
+              <%= t('camino_inicio') %>
+            </td>
+            <td>
+              <%= t('camino_fin') %>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @caminos.each do |camino| %>
+            <tr class="<%= cycle('odd', 'even') %> clickable" >
+              <% if current_usuario.admin? %>
+                <td class="celda-acciones">
+                  <%= link_to icon('eye'), camino, class: "btn-xs btn-primary" %>
+                  <%= link_to icon('pencil'), edit_camino_path(camino), class: "btn-xs btn-default" %>
+                  <%= link_to icon('times'), camino, method: :delete, class: "btn-xs btn-danger", data: { confirm: t('esta_seguro') } %>
+                </td>
+              <% end %>
+              <td onclick="document.getElementById('ver<%= camino.id %>').click()">
+                <%= camino.nombre %>
+                <%= link_to(camino.nombre, camino_inicia_index_path(camino), class: 'hidden', id: "ver#{camino.id}") %>
+              </td>
+              <td onclick="document.getElementById('ver<%= camino.id %>').click()">
+                <%= camino.inicio %>
+              </td>
+              <td onclick="document.getElementById('ver<%= camino.id %>').click()">
+                <%= camino.fin %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel-footer">
+      <%# link_to icon('plus', t('nuevo')), new_camino_path(@camino), class: 'btn btn-primary' %>
+      <%= t('seleccion_click') %>
+    </div>
+  </div>
+</div>
+
+<% content_for :notifica do %>
+  <% if @caminos.count > 0 %>
+    <%= t('recuperados_@_registros').gsub('@#', '<b>'+@caminos.count.to_s+'</b>').html_safe %>
+    <% content_for :notifica_detalle do %>
+
+    <% end %>
+  <% else %>
+    <%= t('no_caminos') %>
+  <% end %>
+<% end %>

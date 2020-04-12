@@ -1,0 +1,42 @@
+<%= form_for([@camino, @etapa, @servicio]) do |f| %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= t('datos_servicio') %></h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <%= f.label :nombre %>
+        <%= f.text_field :nombre, class:'form-control', readonly: @deshabilitado  %>
+      </div>
+      <div class="form-group">
+        <%= f.label :localizacion %>
+        <%= f.text_area :localizacion, class:'form-control', readonly: @deshabilitado  %>
+      </div>
+      <div class="form-group">
+        <%= f.label :horario %>
+        <%= f.text_field :horario, class:'form-control', readonly: @deshabilitado  %>
+      </div>
+      <div class="form-group">
+        <%= f.label :telefono %>
+        <%= f.text_field :telefono, class:'form-control', readonly: @deshabilitado  %>
+      </div>
+      <div class="form-group">
+        <%= f.label :tipo %>
+        <%= f.select :tipo,
+          @servicio.tipos_servicio_todo.map{
+            |m| [m.humanize, m]
+          }.sort,
+          {}, class: 'form-control', readonly: @deshabilitado %>
+      </div>
+      <div class="form-group">
+        <%= f.label :disponibilidad %>
+        <%= f.text_field :disponibilidad, class:'form-control', readonly: @deshabilitado  %>
+      </div>
+    </div>
+    <% unless @deshabilitar_form  %>
+      <div class="panel-footer">
+        <%= f.submit(class: 'btn btn-primary')%>
+      </div>
+    <% end %>
+  </div>
+<% end %>

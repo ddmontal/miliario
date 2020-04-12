@@ -1,0 +1,63 @@
+<% @marcadores = Gmaps4rails.build_markers(@bic_espacios_naturales) do |bic, marker|
+  marker.lat bic.coordenadas.x
+  marker.lng bic.coordenadas.y
+  marker.infowindow %{
+    <h4>#{bic.nombre.capitalize}</h4>
+    <p>#{cl_image_tag bic.imagen.path, width: 250, height: 250, crop: :fit if bic.imagen}</p>
+    <p>#{icon('map-marker', bic.localizacion.capitalize, class:'fa-fw')}</p>
+    <p>#{icon('clock-o', bic.horario, class:'fa-fw')}</p>
+    <p>#{icon('area-chart', bic.extension, class:'fa-fw')}</p>
+    <p class="gestionar-bic">#{
+      link_to icon('wrench', 'Gestionar'),
+      camino_etapa_bic_espacio_natural_path(bic.etapa.camino, bic.etapa, bic),
+      class: 'btn btn-primary'
+    }</p>
+  }
+end %>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <%= t('bic_espacios_naturales') %>
+      <div class="panel-acciones">
+        <%= link_to icon('plus'), new_camino_etapa_bic_espacio_natural_path(@etapa.camino, @etapa, @bic_artistico), class: 'btn-xs btn-default' %>
+      </div>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <% if @bic_espacios_naturales.size > 0 %>
+      <div id="map" class="mapa-etapas centrar-cerrar-iw"></div>
+      <script type="text/javascript">
+        var markers;
+        var handler = Gmaps.build('Google');
+        handler.buildMap(
+        {
+          provider: {
+            zoom: 14,
+            scrollwheel: false,
+          },
+          internal: {id: 'map'}
+        },
+          function(){
+            markers = handler.addMarkers(
+              <%=raw @marcadores.to_json %>
+        );
+
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+
+        // handler.map.centerOn({ lat: <%= 40.435779 %>, lng: <%= -3.702205 %> })
+        });
+      </script>
+    <% else %>
+      <h4><%= t('no_registros') %></h4>
+      <div class="container-fluid">
+      <div class="col-4-12"></div>
+      <div class="col-4-12">
+        <%# link_to t('nuevo'), new_camino_etapa_alojamiento_path(@camino, @etapa, @servicio), class: "btn btn-primary" %>
+      </div>
+      <div class="col-4-12"></div>
+      </div>
+    <% end %>
+  </div>
+</div>

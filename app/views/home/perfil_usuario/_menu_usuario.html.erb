@@ -1,0 +1,19 @@
+<% content_for :menu_controlador do %>
+  <ul class="nav nav-pills nav-stacked">
+    <li class="active nav-item">
+      <a class="nav-link"  data-toggle="pill" href="#datos_usuario">Datos usuario</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="pill" href="#caminos_usuario">Caminos iniciados</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="pill" href="#etapas_usuario">Etapas realizadas</a>
+    </li>
+
+    <% unless current_usuario.super_user? %>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="pill" href="#eliminar_usuario">Cerrar cuenta</a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

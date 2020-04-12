@@ -1,0 +1,55 @@
+<% if usuario_signed_in? %>
+<ul class="ubicacion list-inline text-left">
+    <li class="indicador-posicion">
+      <div class="btn-group">
+        <% if content_for? :menu_controlador %>
+          <a class="btn-menu btn btn-info" href="#">
+            <%= icon('bars', class: 'fa-fw') %>
+          </a>
+        <% end %>
+
+        <% if @home_path %>
+          <%= link_to(icon('chevron-circle-left'), @home_path, class: 'btn btn-primary') %>
+        <% end %>
+
+        <button type="button" class="btn btn-primary">
+          <% if @controller_path.blank? %>
+            <%= t(controller_name) %>
+          <% else %>
+            <%= link_to(icon('chevron-circle-left'), @home_path, class: 'btn btn-primary') %>
+          <% end %>
+        </button>
+        <button type="button" class="btn btn-primary">
+          <%= icon('angle-right') %>
+        </button>
+        <button type="button" class="btn btn-primary">
+          <% if @action_path.blank? %>
+            <%= t(action_name) %>
+          <% else %>
+            <%= link_to(icon('chevron-circle-left'), @home_path, class: 'btn btn-primary') %>
+          <% end %>
+        </button>
+
+      </div>
+    </li>
+  </ul>
+
+  <ul class="menu-usuario list-inline text-right">
+    <li class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuUsuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <%= icon('user', class: 'fa-fw')%>
+          <span class="alias-usuario"><%= current_usuario.alias %></span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenuUsuario">
+          <li><%= link_to(icon('user', t('perfil_usuario'), class: 'fa-fw'), home_perfil_usuario_path) %></li>
+          <li><%= link_to(icon('sign-out', t('cerrar_sesion'), class: 'fa-fw'), destroy_usuario_session_path, method: :delete) %></li>
+          <li>
+            <a class="notificacion-icono separadori" data-toggle="modal" data-target="#about-modal">
+              <%= icon('question-circle', t('about'), class: 'fa-fw') %>
+            </a>
+          </li>
+        </ul>
+    </li>
+  </ul>
+<% end %>

@@ -1,0 +1,9 @@
+<% content_for :home_content do %>
+<h1>
+  <%= t('titulo') %>
+</h1>
+
+<%= link_to t('empezar'), caminos_path, class: 'app-link-empezar btn-lg btn-primary' %>
+<% end %>
+
+<%= render 'home_layout' %>

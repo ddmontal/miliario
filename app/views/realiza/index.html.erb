@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-lg-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <%= t('mapa_camino') %>
+          </h3>
+      </div>
+      <div class="panel-body">
+        <%= render 'map' %>
+      </div>
+
+      <div class="panel-footer">
+        <%= link_to icon('pencil', t('editar'), class: "fa-fw"), edit_camino_inicia_path(@camino, @inicia), class: 'btn btn-warning' %>
+      </div>
+    </div>
+  </div>
+  <% if @etapas_sin_realizar.count > 0 %>
+    <div class="col-lg-5">
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+               Etapas sin realizar
+            </h3>
+          </div>
+        <div class="panel-body">
+          <% unless @etapas_sin_realizar.blank? %>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <td>
+                    Comienzo
+                  </td>
+                  <td>
+                    Fin
+                  </td>
+                  <td>
+                </thead>
+                <tbody>
+                  <% for etapa in @etapas_sin_realizar %>
+                    <tr class="clickable">
+                      <td onclick="document.getElementById('realizar<%= etapa.id %>').click()">
+                        <%= etapa.comienzo %>
+                        <%= link_to etapa.comienzo, new_camino_inicia_etapa_realiza_path(@camino, @inicia, etapa), class: 'hidden', id: "realizar#{etapa.id}" %>
+                      </td>
+                      <td onclick="document.getElementById('realizar<%= etapa.id %>').click()">
+                        <%= etapa.fin %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+          <% else %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="<%= if @etapas_sin_realizar.count > 0; 'col-lg-5'; else 'col-lg-10' end %>">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+             Etapas realizadas
+          </h3>
+        </div>
+      <div class="panel-body">
+        <% unless @realizadas.blank? %>
+            <table class="table table-striped table-hover">
+              <thead>
+                <td>
+                  Comienzo
+                </td>
+                <td>
+                  Fin
+                </td>
+                <td>
+                  Fecha Inicio
+                </td>
+                <td>
+                  Fecha Fin
+                </td>
+              </thead>
+              <tbody>
+                <% for realizada in @realizadas %>
+                  <tr class="clickable">
+                    <td onclick="document.getElementById('ver<%= realizada.id %>').click()">
+                      <%= realizada.etapa.comienzo %>
+                      <%= link_to realizada.fecha_inicio,
+                        camino_inicia_etapa_realiza_servicio_utiliza_index_path(@camino, @inicia, realizada.etapa, realizada, 0),
+                        class: 'hidden', id: "ver#{realizada.id}" %>
+                    </td>
+                    <td onclick="document.getElementById('ver<%= realizada.id %>').click()">
+                      <%= realizada.etapa.fin %>
+                    </td>
+                    <td onclick="document.getElementById('ver<%= realizada.id %>').click()">
+                      <%= l realizada.fecha_inicio.to_date %>
+                    </td>
+                    <td onclick="document.getElementById('ver<%= realizada.id %>').click()">
+                      <%= l realizada.fecha_inicio.to_date %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+        <% else %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- Notificaciones -->
+<% content_for :notifica do %>
+  <% if @camino %>
+    <%= t('registro_recuperado_correcto') %>
+  <% else %>
+    <% content_for :notifica_estado do %>notifica_error<% end %>
+    <%= t('no_registros') %>
+    <% content_for :notifica_detalle do %>
+      <%= t('no_registros_detalle') %>
+    <% end %>
+  <% end %>
+<% end %>

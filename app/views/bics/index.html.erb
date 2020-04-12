@@ -1,0 +1,66 @@
+<div class="col-8">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Listado de Bienes de Interes Cultural
+      </h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="celda-acciones">
+              <%= t('acciones') %>
+            </td>
+            <td>
+              <%= t('camino_nombre') %>
+            </td>
+            <td>
+              <%= t('localizacion') %>
+            </td>
+            <td>
+              <%= t('coordenadas') %>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @bics.each do |bic| %>
+            <tr class="<%= cycle('odd', 'even') %>">
+              <td class="celda-acciones">
+                <%= link_to icon('eye'), bic, class: "btn-xs btn-primary" %>
+                <%=
+                  link_to icon('pencil') \
+                    , bic.is_a?(BicEspacioNatural) ?\
+                        edit_bic_espacio_natural_path(bic) :\
+                        edit_bic_artistico_path(bic) \
+                    , class: "btn-xs btn-default"
+                 %>
+                <%= link_to icon('times'), bic, method: :delete, class: "btn-xs btn-danger", data: { confirm: t('esta_seguro') } %>
+              </td>
+              <td>
+                <%= bic.nombre %>
+              </td>
+              <td>
+                <%= bic.localizacion %>
+              </td>
+              <td>
+                <%= bic.coordenadas %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<% content_for :notifica do %>
+  <% if @bics.count > 0 %>
+    <%= t('recuperados_@_registros').gsub('@#', '<b>'+@bics.count.to_s+'</b>').html_safe %>
+    <% content_for :notifica_detalle do %>
+
+    <% end %>
+  <% else %>
+    <%= t('no_registros') %>
+  <% end %>
+<% end %>

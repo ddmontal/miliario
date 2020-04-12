@@ -1,0 +1,41 @@
+<% if @servicio %>
+  <div id="map" class="<%=controller_name%> <%=controller_name%>-<%= action_name %>"></div>
+
+  <script type="text/javascript">
+  var handler = Gmaps.build('Google');
+
+  handler.buildMap(
+    {
+      provider: {
+        zoom: 15,
+        scrollwheel: false,
+        draggable: false,
+      },
+      internal: {id: 'map'}
+    },
+
+    function(){
+    markers = handler.addMarker(
+      {
+        lat: <%= @servicio.coordenadas.x %>,
+        lng: <%= @servicio.coordenadas.y %>,
+        infowindow: `
+          <h4><%= @servicio.nombre %></h4>
+          <p><%= icon('map-marker', @servicio.localizacion, class:'fa-fw') %></p>
+          <p><%= icon('clock-o', @servicio.horario, class:'fa-fw') %></p>
+          <p><%= icon('phone', @servicio.telefono, class:'fa-fw') %></p>
+          <p><%= icon('tag', @servicio.tipo.humanize, class:'fa-fw') %></p>
+          <% if @servicio.disponibilidad %>
+          <p><%=
+            icon('calendar', @servicio.disponibilidad, class:'fa-fw')
+              %></p>
+          <% end %>
+
+        `
+      }
+    );
+
+    handler.map.centerOn({ lat: <%= @servicio.coordenadas.x %>, lng: <%= @servicio.coordenadas.y %> })
+  });
+  </script>
+<% end %>

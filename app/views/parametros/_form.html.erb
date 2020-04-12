@@ -1,0 +1,142 @@
+<script type="text/javascript">
+  var ntxt = 0;
+
+  function crearTXT(valor) {
+    $('#valor-fields').append(
+      '<div id="div_valor'+ntxt+'">'+
+        '<div class="col-lg-11">'+
+          '<input class="form-control" type="text" value="'+valor+
+            '" name="parametro[valor'+ntxt+']" id="parametro_valor'+ntxt+'">&nbsp;'+
+        '</div>'+
+        '<div class="col-lg-1">'+
+          '<a href="#" class="btn btn-danger" id="link_valor'+ntxt+'" onclick="eliminarTXT(\'valor'+ntxt+'\')">'+
+            '<i class="fa fa-trash-o"> </i>'+
+          '</a>'+
+        '</div>'+
+      '</div>'
+    );
+    ntxt++;
+  }
+
+  function eliminarTXT(valor) {
+    $('#div_'+valor).remove();
+    // $('#link_'+valor).remove();
+    // $('#sep_'+valor).remove();
+  }
+
+
+</script>
+
+
+
+<%= form_for(@parametro) do |f| %>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= t('parametros') %> - <%= action_name %></h3>
+        </div>
+        <div class="panel-body">
+          <% if @parametro.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@parametro.errors.count, "error") %> prohibited this parametro from being saved:</h2>
+
+              <ul>
+              <% @parametro.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="field">
+            <%= f.label :clave %><br>
+            <%= f.text_field :clave, class: 'form-control', readonly: !@parametro.new_record? && @parametro.bloqueado %>
+          </div>
+
+          <% if @parametro.new_record? %>
+            <div class="form-group">
+              <%= f.check_box :bloqueado %>
+              <%= f.label :bloqueado %>
+            </div>
+          <% end %>
+
+
+          <% if @parametro.new_record? %>
+            <div class="field">
+              <%= f.check_box :multi, id: 'multicheck' %>
+              <%= f.label :multi %>
+            </div>
+
+            <script type="text/javascript">
+            $('#multicheck').click(function(){
+              if($(this).is(':checked')){
+                $('#valor-field').hide();
+                $('#valor-fields').show();
+                $('#valor-fields-add').show();
+              } else {
+                $('#valor-field').show();
+                $('#valor-fields').hide();
+                $('#valor-fields-add').hide();
+
+              }
+            });
+            </script>
+          <% end %>
+
+          <%= f.label :valor, 'Value' %><br>
+          <div id="valor-field" class="field">
+            <% if @parametro.multi %>
+                <% @parametro.valor.each do |v| %>
+                  <div class="">
+                    <script type="text/javascript">
+                      $(function(){
+                        crearTXT('<%= v %>')
+                      })
+                    </script>
+                  </div>
+                <% end %>
+            <% else %>
+              <%= f.text_field :valor, id: 'valor-txt', class: 'form-control' %>
+              <script type="text/javascript">
+                $(function() {
+                  $('#valor-fields').hide();
+                  $('#valor-fields-add').hide();
+                })
+              </script>
+            <% end %>
+          </div>
+
+          <div id="valor-fields" class="row field">
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 text-left">
+              <a href="#" class="btn-sm btn-default" id="valor-fields-add" onclick="crearTXT('')"><i class="fa fa-fw fa-plus"></i>Nuevo</a>
+            </div>
+          </div>
+
+          <script type="text/javascript">
+          $(function() {
+            if (ntxt == 0) {
+              crearTXT('');
+            }
+
+          })
+          </script>
+        </div>
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-lg-6 text-left">
+            </div>
+            <div class="col-lg-6 text-right">
+                <%= f.submit(class: 'btn btn-primary') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+<% end %>

@@ -1,0 +1,85 @@
+<% if @bic_artistico %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <%= @bic_artistico.nombre %>
+         <div class="panel-acciones">
+           <%=
+            link_to icon('pencil'), edit_camino_etapa_bic_artistico_path(
+                @bic_artistico.etapa.camino,
+                @bic_artistico.etapa,
+                @bic_artistico
+              ),
+              class: 'btn-xs btn-default'
+            %>
+           <%=
+            link_to icon('times'),
+              camino_etapa_bic_artistico_path(
+                @bic_artistico.etapa.camino,
+                @bic_artistico.etapa,
+                @bic_artistico
+              ),
+              method: :delete, class: 'btn-xs btn-danger',
+              data: { confirm: t('esta_seguro') }
+            %>
+         </div>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div id="map" class="mapa-bic-artistico"></div>
+      <hr>
+      <% @deshabilitar_form = true %>
+      <%= render 'form' %>
+    </div>
+    <!-- <div class="panel-footer">
+      <div class="panel-acciones-footer">
+      </div>
+    </div> -->
+  </div>
+
+  <script type="text/javascript">
+  var handler = Gmaps.build('Google');
+
+  handler.buildMap(
+    {
+      provider: {
+        zoom: 17,
+        scrollwheel: false,
+      },
+      internal: {id: 'map'}
+    },
+
+    function(){
+    markers = handler.addMarker(
+      {
+        lat: <%= @bic_artistico.coordenadas.x %>,
+        lng: <%= @bic_artistico.coordenadas.y %>,
+        infowindow: `
+          <h4><%= @bic_artistico.nombre.capitalize %></h4>
+          <p><%= cl_image_tag @bic_artistico.imagen.path, width: 250, height: 250, crop: :fit if @bic_artistico.imagen %></p>
+          <p><%= icon('map-marker', @bic_artistico.localizacion.capitalize, class:'fa-fw') %></p>
+          <p><%= icon('clock-o', @bic_artistico.horario, class:'fa-fw') %></p>
+          <p><%= icon('tag', @bic_artistico.tipo.capitalize, class:'fa-fw') %></p>
+          <p><%= icon('phone', @bic_artistico.estilo.capitalize, class:'fa-fw') %></p>
+          <p><%= icon('globe', @bic_artistico.historia.capitalize, class:'fa-fw') %></p>
+        `
+      }
+    );
+
+    handler.map.centerOn({ lat: <%= @bic_artistico.coordenadas.x %>, lng: <%= @bic_artistico.coordenadas.y %> })
+  });
+  </script>
+<% end %>
+
+<!-- Notificaciones -->
+<% content_for :notifica do %>
+  <% if @bic_artistico %>
+    <%= t('registro_recuperado_correcto') %>
+  <% else %>
+    <% content_for :notifica_estado do %>notifica_error<% end %>
+    <%= t('no_registros') %>
+    <% content_for :notifica_detalle do %>
+      <%= t('no_registros_detalle') %>
+    <% end %>
+  <% end %>
+<% end %>

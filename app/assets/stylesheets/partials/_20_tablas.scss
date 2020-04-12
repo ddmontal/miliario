@@ -1,0 +1,51 @@
+$anchura_celda_acciones: $anchura_titulo - 150;
+
+table {
+  thead {
+    tr {
+      td {
+        font-weight: bold;
+        border-bottom: 1px solid lighten(desaturate($color_borde_menu_elementos, 50%), 30%);
+      }
+    }
+  }
+
+}
+.table-striped > tbody > tr {
+  transition: 0.3s all ease-in;
+
+  &:nth-of-type(odd) {
+    background: $color_fila_impar;
+  }
+
+  &:hover {
+    background-color: $color_fila_resaltada;
+  }
+}
+
+.celda-acciones {
+  width: $anchura_celda_acciones;
+  // border-right: 1px dotted $color_borde_menu_elementos;
+}
+tbody {
+
+  td {
+    text-overflow: ellipsis;
+    word-break:break-all;
+
+    .btn-xs {
+      padding: 3px 6px;
+      margin-right: 4px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.tr-header {
+  td {
+    background-color: darken($color_fila_resaltada, 10%);
+  }
+}

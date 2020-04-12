@@ -1,0 +1,25 @@
+.menu-resposivo {
+  width: $ancho-menu-responsivo;
+  height: 100%;
+  background: $color_fondo_menu;
+  border-right: 1px solid $color_borde_panel;
+}
+
+li.active {
+  background-color: $color_fondo_titulo;
+  transition: 0.3s all ease-in-out;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+  color: black;
+  border-radius: 0;
+  background-color: rgba(#fff, 0);
+  transition: 0.3s all ease-in-out;
+}
+
+.nav-pills > li.active > a:hover {
+  background-color: rgba(#fff, 0);
+  border-radius: 0;
+  color:black;
+  transition: 0.3s all ease-in-out;
+}
